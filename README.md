@@ -12,7 +12,21 @@ A simple yet powerful Java-based **Bank Management Software** with a user-friend
 - 🧾 View all accounts with scrollable UI
 - ☁️ Data is persisted securely in MongoDB Atlas - 🧠 Organized, modular, object-oriented Java code
 
-## 📸 Screenshots > _Coming soon!_ --- ## 🛠️ Tech Stack | Layer             | Technology            |
+## 📸 Screenshots >
+![image](https://github.com/user-attachments/assets/2f348d5c-6d74-4a7b-b40d-090b82e9f6f9)
+## Create Account
+![image](https://github.com/user-attachments/assets/628aaab6-c18f-4602-82c6-16ee282cb331)
+## Account Created
+![image](https://github.com/user-attachments/assets/e2072306-62b1-48f3-9a05-e5eb9f26f52b)
+## Deposit
+![image](https://github.com/user-attachments/assets/77be2fb1-6c33-45ea-a1bd-19e514fee7c1)
+![image](https://github.com/user-attachments/assets/f1436522-7503-413d-8448-98d22a5fb263)
+
+
+
+
+## 🛠️ Tech Stack 
+| Layer            | Technology            |
 |------------------|------------------------|
 | GUI              | Java Swing             |
 | Backend Logic    | Java (OOP principles)  |
