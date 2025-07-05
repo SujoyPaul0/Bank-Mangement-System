@@ -23,31 +23,98 @@ public class GUI {
 
         // Add cllick event to create Accoun button
         createBtn.addActionListener(e -> {
-            // Prompt user to enter their name
-            String name = JOptionPane.showInputDialog(frame, "Enter your name:");
+            JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
 
-            // if user cancels or enters nothing
-            if (name == null || name.trim().isEmpty()) return;
+            JTextField nameField = new JTextField();
+
+            JSpinner dobSpinner = new JSpinner(new SpinnerDateModel());
+
+            dobSpinner.setEditor(new JSpinner.DateEditor(dobSpinner, "dd/MM/yyyy"));
+
+            // Multi-line text area for address
+            JTextArea addressArea = new JTextArea(3, 20);
+
+            // Other text fields for state , pin, phone number
+            JTextField stateField = new JTextField();
+            JTextField pinField = new JTextField();
+            JTextField phoneField = new JTextField();
+            
+            // Dropdown fo marital status with two options
+            String[] statusOptions = {"Unmarried", "Married"};
+            JComboBox<String> maritalStatusBox = new JComboBox<>(statusOptions);
+
+            JTextField depositField = new JTextField();
+
+            // Add each label and input field to the panel
+            panel.add(new JLabel("Full Name:"));
+            panel.add(nameField);
+
+            panel.add(new JLabel("Date of Birth: "));
+            panel.add(dobSpinner);
+
+            panel.add(new JLabel("Address:"));
+            panel.add(new JScrollPane(addressArea)); // wrap text area in scroll pane
+
+            panel.add(new JLabel("State:"));
+            panel.add(stateField);
+
+            panel.add(new JLabel("Pin Code:"));
+            panel.add(pinField);
+
+            panel.add(new JLabel("Phone No:"));
+            panel.add(phoneField);
 
 
-            // Prompt user to enter initial deposit
-            String depositStr = JOptionPane.showInputDialog(frame, "Enter initial deposit:");
+            panel.add(new JLabel("Marital Status:"));
+            panel.add(maritalStatusBox);
 
-            // If user cancels or enters nothing, exit early
-            if (depositStr == null || depositStr.trim().isEmpty()) return;
+            panel.add(new JLabel("Initial Deposit:"));
+            panel.add(depositField);
 
-            try {
-                // Convert input to double
-                double deposit = Double.parseDouble(depositStr);
-                Account newAcc = bank.createAccount(name, deposit);
+            // Show confirmation dialog with form panel and OK/Cancel buttons
+            int result = JOptionPane.showConfirmDialog(
+                null, 
+                panel,
+                "Create Account",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+            );
 
-                JOptionPane.showMessageDialog(frame, "Account Created!\nAccount Number: " + newAcc.getAccountNumber(), "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch ( NumberFormatException ex ) {
-                // If the user enters not-numeric deposit, show error message
-                JOptionPane.showMessageDialog(frame,
-                        "Invalid deposit amount!",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+            // If user clicked OK
+            if (result == JOptionPane.OK_OPTION) {
+                try {
+                    // Read values from input fields and conver them as needed
+                    String name = nameField.getText().trim();
+
+                    String dob = new java.text.SimpleDateFormat("dd/MM/yyyy")
+                        .format(dobSpinner.getValue());
+
+                    String address = addressArea.getText().trim();
+                    String state = stateField.getText().trim();
+                    String pin = pinField.getText().trim();
+                    String phone = phoneField.getText().trim();
+                    String maritalStatus = (String) maritalStatusBox.getSelectedItem();
+                    // Convert deposit string to double
+                    double deposit = Double.parseDouble(depositField.getText().trim());
+
+                    Account newAcc = bank.createAccount(name, deposit, dob, address, state, pin, phone, maritalStatus);
+
+
+                    // Create confirmation message with account number
+                    JOptionPane.showMessageDialog(null, 
+                        "Account Created!\nAccount No: " + newAcc.getAccountNumber(),
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
+                    
+                } catch (Exception ex) {
+                    // If any input is invalid or empty, show error
+                    JOptionPane.showMessageDialog(null,
+                        "Please fill all fields correctly!",
+                        "Error",
+                         JOptionPane.INFORMATION_MESSAGE);
+                }
             }
+            
+
         });
 
 

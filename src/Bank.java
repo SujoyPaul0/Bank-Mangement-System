@@ -8,12 +8,13 @@ public class Bank {
     private int nextAccountNumber = 1001;
 
     // Method to create a new acct
-    public Account createAccount(String name, double initialDeposit) {
-        // new act object
-        Account acc = new Account(name, nextAccountNumber++, initialDeposit);
-        
-        accounts.add(acc);
-        return acc;
+    public Account createAccount(String name, double balance, String dob,
+                             String address, String state, String pin,
+                             String phone, String maritalStatus) {
+        // new acount object
+            Account acc = new Account(name, nextAccountNumber++, balance, dob, address, state, pin, phone, maritalStatus);
+            accounts.add(acc);
+            return acc;
     }
 
     // Method to return the list of all accounts
