@@ -1,4 +1,5 @@
-# 💳 Bank Management System A simple yet powerful Java-based **Bank Management Software** with a user-friendly **Swing GUI** and **MongoDB Atlas** integration. It allows users to **create accounts**, **deposit**, **withdraw**, and **view accounts** — all backed by a NoSQL cloud database.
+# 💳 Bank Management System
+A simple yet powerful Java-based **Bank Management Software** with a user-friendly **Swing GUI** and **MongoDB Atlas** integration. It allows users to **create accounts**, **deposit**, **withdraw**, and **view accounts** — all backed by a NoSQL cloud database.
 
 ![Java Swing + MongoDB](https://img.shields.io/badge/Java-Swing-green?style=flat-square)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?style=flat-square)
