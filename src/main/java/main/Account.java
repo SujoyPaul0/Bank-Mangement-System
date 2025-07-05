@@ -1,3 +1,5 @@
+package main;
+
 public class Account {
     private String name;
     private int accountNumber;

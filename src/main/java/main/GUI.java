@@ -1,5 +1,21 @@
-import java.awt.*;
-import javax.swing.*;
+package main;
+
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+
 
 public class GUI {
     private Bank bank;
@@ -99,19 +115,22 @@ public class GUI {
 
                     Account newAcc = bank.createAccount(name, deposit, dob, address, state, pin, phone, maritalStatus);
 
+                    MongoUtil.saveAccount(newAcc);
+
 
                     // Create confirmation message with account number
                     JOptionPane.showMessageDialog(null, 
                         "Account Created!\nAccount No: " + newAcc.getAccountNumber(),
-                        "Success", JOptionPane.INFORMATION_MESSAGE);
+                        "Success", 
+                        JOptionPane.INFORMATION_MESSAGE);
                     
                 } catch (Exception ex) {
-                    // If any input is invalid or empty, show error
+                    ex.printStackTrace(); // 🔍 This will show exact error in console/log
                     JOptionPane.showMessageDialog(null,
                         "Please fill all fields correctly!",
                         "Error",
-                         JOptionPane.INFORMATION_MESSAGE);
-                }
+                        JOptionPane.INFORMATION_MESSAGE);
+                    }
             }
             
 
@@ -120,28 +139,28 @@ public class GUI {
 
         // View Accounts Button Logic
         viewBtn.addActionListener(e -> {
-            // Get all accounts from the bank
-            java.util.List<Account> allAccounts = bank.getAllAccoutnts();
+            List<Account> accounts = MongoUtil.getAllAccounts();
 
-            // If no accounts exist, show message
-            if (allAccounts.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No accounts available.");
+            if (accounts.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "No accounts found.");
                 return;
             }
 
-            // Use StringBuilder to prepare a formatted list
-            StringBuilder sb = new StringBuilder("List of Accounts:\n\n");
-            for (Account acc : allAccounts) {
-                sb.append(acc.toString()).append("\n");
+            StringBuilder message = new StringBuilder("Accounts:\n\n");
+            for (Account acc : accounts) {
+                message.append("Account No: ").append(acc.getAccountNumber()).append("\n")
+                    .append("Name: ").append(acc.getName()).append("\n")
+                    .append("Balance: ").append(acc.getBalance()).append("\n")
+                    .append("Phone: ").append(acc.getPhone()).append("\n\n");
             }
 
-            // Show the list in a scrollable message dialog
-            JTextArea textArea = new JTextArea(sb.toString());
+            JTextArea textArea = new JTextArea(message.toString());
             textArea.setEditable(false);
             JScrollPane scrollPane = new JScrollPane(textArea);
-            scrollPane.setPreferredSize(new Dimension(350, 200));
-            JOptionPane.showMessageDialog(null, scrollPane, "Accounts", JOptionPane.INFORMATION_MESSAGE);
+            scrollPane.setPreferredSize(new Dimension(400, 300));
+            JOptionPane.showMessageDialog(frame, scrollPane, "All Accounts", JOptionPane.INFORMATION_MESSAGE);
         });
+
 
 
         depositeBtn.addActionListener(e -> {
