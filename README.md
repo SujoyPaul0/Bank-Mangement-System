@@ -5,7 +5,12 @@ A simple yet powerful Java-based **Bank Management Software** with a user-friend
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 
-## 🚀 Features - 📋 Create new bank accounts with: - Name, DOB (with date picker), Address, State, PIN, Phone, Marital Status - 💰 Deposit & Withdraw funds - 🧾 View all accounts with scrollable UI - ☁️ Data is persisted securely in MongoDB Atlas - 🧠 Organized, modular, object-oriented Java code
+## 🚀 Features 
+- 📋 Create new bank accounts with:
+ - Name, DOB (with date picker), Address, State, PIN, Phone, Marital Status
+- 💰 Deposit & Withdraw funds
+- 🧾 View all accounts with scrollable UI
+- ☁️ Data is persisted securely in MongoDB Atlas - 🧠 Organized, modular, object-oriented Java code
 
 ## 📸 Screenshots > _Coming soon!_ --- ## 🛠️ Tech Stack | Layer             | Technology            |
 |------------------|------------------------|
