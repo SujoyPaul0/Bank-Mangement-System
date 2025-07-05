@@ -20,6 +20,7 @@ public class GUI {
         JButton withdrawBtn = new JButton("Withdraw");
         JButton exitBtn = new JButton("Exit");
 
+
         // Add cllick event to create Accoun button
         createBtn.addActionListener(e -> {
             // Prompt user to enter their name
@@ -48,6 +49,104 @@ public class GUI {
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+
+        // View Accounts Button Logic
+        viewBtn.addActionListener(e -> {
+            // Get all accounts from the bank
+            java.util.List<Account> allAccounts = bank.getAllAccoutnts();
+
+            // If no accounts exist, show message
+            if (allAccounts.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No accounts available.");
+                return;
+            }
+
+            // Use StringBuilder to prepare a formatted list
+            StringBuilder sb = new StringBuilder("List of Accounts:\n\n");
+            for (Account acc : allAccounts) {
+                sb.append(acc.toString()).append("\n");
+            }
+
+            // Show the list in a scrollable message dialog
+            JTextArea textArea = new JTextArea(sb.toString());
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(350, 200));
+            JOptionPane.showMessageDialog(null, scrollPane, "Accounts", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+
+        depositeBtn.addActionListener(e -> {
+            // Ask for account number
+            String accNoStr = JOptionPane.showInputDialog(null, "Enter account number:");
+
+            //validate input
+            if (accNoStr == null || accNoStr.trim().isEmpty()) return;
+
+            String amountStr = JOptionPane.showInputDialog(null, "Enter deposit amount:");
+
+            if (amountStr == null || amountStr.trim().isEmpty()) return;
+
+            try {
+                int accNo = Integer.parseInt(accNoStr);
+                double amount = Double.parseDouble(amountStr);
+
+                boolean success = bank.depositToAccount(accNo, amount);
+
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "₹" + amount + " deposited to Account No: " + accNo, "Deposit Successful", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, 
+                        "Account not found!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, 
+                "Invalid input! Please enter numeric values.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        withdrawBtn.addActionListener(e -> {
+            // Ask for account Number
+            String accNoStr = JOptionPane.showInputDialog(null, "Enter account number:");
+
+            if (accNoStr == null || accNoStr.trim().isEmpty()) return;
+
+            // ask for amount
+            String amountStr = JOptionPane.showInputDialog(null, "Enter Withdraw and amount:");
+            
+            if (amountStr == null || amountStr.trim().isEmpty()) return;
+
+            try {
+                int accNo = Integer.parseInt(accNoStr);
+                double amount = Double.parseDouble(amountStr);
+
+                // Perform withdrawal
+                boolean success = bank.withdrawFromAccount(accNo, amount);
+
+                if (success) {
+                    JOptionPane.showMessageDialog(null, 
+                        "₹" + amount + " withdrawn from Account No: " + accNo,
+                        "Withdraw Successful", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    // If withdrawl fails, show an error message
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Withdraw failed! Either account doesn't exist or insufficient balance.",
+                        "Error",                             
+                        JOptionPane.ERROR_MESSAGE             
+                    );
+                }
+
+            } catch ( NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, 
+                    "Invalid input! Please enter numeric values.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        });
             
 
         exitBtn.addActionListener(e -> System.exit(0));
@@ -57,7 +156,6 @@ public class GUI {
         frame.add(depositeBtn);
         frame.add(withdrawBtn);
         frame.add(exitBtn);
-        
         frame.setVisible(true);
     }
 }
